@@ -1,8 +1,12 @@
 const express = require('express')
 const env = require("dotenv");
 const mongoose = require("mongoose");
-const userRoutes = require('./routes/user')
 const app = express();
+
+//routes
+const authRoutes = require('./routes/auth')
+const adminRoutes = require('./routes/admin/auth')
+
 
 env.config()
 
@@ -20,7 +24,8 @@ mongoose.connect(MONGODB_URI, {
   });
 
 app.use(express.json())
-app.use('/api', userRoutes)
+app.use('/api', authRoutes)
+app.use('/api', adminRoutes)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
